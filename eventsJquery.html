@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part2 - Jquery Events</title>
+    <script src="script/jquery-3.5.1.js"></script>
+    <script>
+        $(function () {
+            $('#Button1').click(function () {
+                alert(event.target.innerHTML + ' Button has been clicked!');
+            });
+
+            $('#Button2').bind('click', function () {
+                alert(event.target.innerHTML + ' Button has been clicked!');
+            });
+
+            $('#Button3').on('click', function () {
+                alert(event.target.innerHTML + ' Button has been clicked!');
+            });
+
+            $('#Button4a, #Button4b').on('click', function () {
+                alert(event.target.innerHTML + ' Button has been clicked!');
+            });
+
+            // Step 5
+            $('#step5div').css('width', '400px').css('height', '400px').css('border', '1px solid black');
+            // $('#step5div').on({
+            //   click: function() {
+            //       alert(event.type + " was used");
+            //   },
+            //   mouseenter: function() {
+            //     alert(event.type + " was used");
+            //   },
+            //   mouseleave: function() {
+            //     alert(event.type + " was used");
+            //   }
+            // });
+
+            // Step 6
+            var step6span = "<span id='step6span'></span>";
+            $('#step5div').append(step6span);
+            $('#step5div').on({
+                click: function () {
+                    $('#step6span').html(event.type + ' was used');
+                },
+                mouseenter: function () {
+                    $('#step6span').html(event.type + ' was used');
+                },
+                mouseleave: function () {
+                    $('#step6span').html(event.type + ' was used');
+                }
+            });
+
+            // Step 7
+            $('a').click(function () {
+                event.preventDefault()
+                $(this).css('color', 'red');
+                alert(event.target.nodeName + ' triggered the event');
+            });
+
+            // Step 8
+            $(window).resize(function () {
+                $('#step8div').html('Width: ' + $(window).width() + ', Height: ' + $(window).height());
+            })
+
+            // Step 9
+            var step9Input = "<input id='step9Input' placeholder='Step 9'></input><br/>";
+            $('#step9div').append(step9Input);
+            $('#step9Input').on({
+                focus: function () {
+                    $(this).css('background', 'lightgray');
+                },
+                blur: function () {
+                    $(this).css('background', 'white');
+                }
+            });
+
+            // Step 10
+            var form = "<form id='step10'></form><br/>";
+            var input1 = "<input id='step10a' placeholder='Enter Name'></input><br/>";
+            var input2 = "<input id='step10b' placeholder='Enter Email'></input><br/>";
+            var submit = "<input id='step10c' type='submit'></input>";
+            $('#step10div').append(form);
+            $('form').append(input1);
+            $('form').append(input2);
+            $('form').append(submit);
+
+            $('#step10').submit(function (event) {
+                var valid = true;
+                var val1 = $('#step10a').val().trim();
+                var val2 = $('#step10b').val().trim();
+                if (val1 == '') {
+                    alert("Name required");
+                    $('#step10a').css('border', '1px solid red');
+                    valid = false;
+                } else {
+                    $('#step10a').removeAttr('style');
+                }
+                if (val2 == '') {
+                    alert("Email required");
+                    $('#step10b').css('border', '1px solid red');
+                    valid = false;
+                } else {
+                    $('#step10b').removeAttr('style');
+                }
+
+                if (val1 != '' && val2 != '') {
+                    $('#step10a').css('border', '1px solid green');
+                    $('#step10b').css('border', '1px solid green');
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <button id="Button1">Button 1 click</button><br />
+    <button id="Button2">Button 2 bind</button><br />
+    <button id="Button3">Button 3 on</button><br />
+    <button id="Button4a">Button 4a on</button><br />
+    <button id="Button4b">Button 4b on</button><br />
+
+    <div id='step5div'></div><br />
+
+    <a href="http://www.modulemedia.com">Browse to modulemedia.com</a> <br />
+
+    <div id='step8div'></div> <br />
+    <div id='step9div'></div> <br />
+    <div id='step10div'></div> <br />
+</body>
+
+</html>
